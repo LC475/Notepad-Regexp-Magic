@@ -1,0 +1,34 @@
+1. How can I mark 1 line next to the lines containing a specific word?
+Let’s suppose we would like to mark any line containing the license string, as well as the lines just below each line which contains the license string, in the usual license.txt file, part of any N++ package :
+
+    Open the license.txt file in Notepad v.7.5.4
+
+    Open the Mark dialog ( Search > Mark… menu command )
+
+    Check the Bookmark line, Wrap around and Regular expresion options
+
+    Check the Match case option, if necessary
+
+    UN-check the Purge for each search option
+
+    Type in (?-s).*license.*, in the Find what: zone
+
+    Click on the Mark All button
+
+    Type in (?-s)license.*\R\K.*\R, in the Find what: zone
+
+    Click, a second time, on the Mark All button
+
+Et voilà !
+
+Notes :
+
+    As usual, the modifier (?-s) means that any dot character will match a single standard characters, only
+
+    In the first regex, the part .*license.* matches any line containing the string license
+
+    In the second regex, the part license.*\R matches the remaining of the line, beginning with the string license, with its End of Line chars
+
+    Then, the \K syntax forces the regex engine to forget any previous match
+
+    So, the final regex is, simply, .*\R, which matches the entire contents of the next line. Note that the \R syntax, at the end of the regex, which matches the line-break characters, is needed, when this next line is a true blank line !
